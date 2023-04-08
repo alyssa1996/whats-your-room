@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import ConfirmButton from '../components/ConfirmButton';
 import {escape_room_data} from '../escape_room';
 import {Layout} from '../styles';
 
@@ -84,11 +85,16 @@ const LocationPage = () => {
       </OptionContainer>
 
       <p onClick={() => filterByLocation()}> 확인</p>
+      <ConfirmButton />
     </Layout>
   );
 };
 
 export default LocationPage;
+
+// const LocationLayout = styled(Layout)`
+//   padding:
+// `
 
 const OptionContainer = styled.div`
   width: 100%;
