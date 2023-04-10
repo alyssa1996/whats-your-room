@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import ConfirmButton from '../components/ConfirmButton';
 import {escape_room_data} from '../escape_room';
+import {useAppDispatch} from '../store/config';
+import {setSelectedRoom} from '../store/slices/roomSlice';
 import {Layout} from '../styles';
 
 const SEOUL_AREA_LIST = [
@@ -28,12 +31,14 @@ const GYEONGSANG_AREA_LIST = ['대구', '부산', '대전', '서면'];
 
 const LocationPage = () => {
   const [selectedLocation, setSelectedLocation] = useState<Array<string>>([]);
+  const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
 
   const filterByLocation = () => {
-    const locationFilteredData = escape_room_data.filter((value) =>
-      selectedLocation.includes(value.지역),
-    );
-    console.log(locationFilteredData);
+    const locationFilteredData = escape_room_data.filter((value) => selectedLocation.includes(value.지역));
+    dispatch(setSelectedRoom(locationFilteredData));
+    navigate('/options');
   };
 
   return (
