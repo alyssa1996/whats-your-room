@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 interface CommonState {
-  selectedRoom: Array<object | null>;
+  selectedRoom: Array<any | null>;
 }
 
 const initialState: CommonState = {
