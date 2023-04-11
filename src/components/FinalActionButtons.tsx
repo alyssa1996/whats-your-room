@@ -2,21 +2,28 @@ import React from 'react';
 import styled from 'styled-components';
 import {Layout} from '../styles';
 
-const ConfirmButton = () => {
+interface ActionButtonProps {
+  onHandleReset: () => void;
+  onHandleConfirm: () => void;
+}
+
+const FinalActionButtons = ({onHandleReset, onHandleConfirm}: ActionButtonProps) => {
   return (
     <ButtonLayout>
-      <InitializeButton>초기화</InitializeButton>
-      <SelectButton>선택완료</SelectButton>
+      <InitializeButton onClick={() => onHandleReset()}>초기화</InitializeButton>
+      <SelectButton onClick={() => onHandleConfirm()}>선택완료</SelectButton>
     </ButtonLayout>
   );
 };
 
-export default ConfirmButton;
+export default FinalActionButtons;
 
 const ButtonLayout = styled(Layout)`
   width: 100%;
   height: auto;
   display: flex;
+  position: fixed;
+  bottom: 0px;
 `;
 
 const InitializeButton = styled.div`
