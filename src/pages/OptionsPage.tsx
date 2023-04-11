@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import FinalActionButtons from '../components/\bFinalActionButtons';
+import FinalActionButtons from '../components/FinalActionButtons';
 import {useAppDispatch, useAppSelector} from '../store/config';
 import {setSelectedRoom} from '../store/slices/roomSlice';
 import {Layout} from '../styles';

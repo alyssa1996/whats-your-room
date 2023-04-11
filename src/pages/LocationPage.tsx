@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
-import FinalActionButtons from '../components/\bFinalActionButtons';
+import FinalActionButtons from '../components/FinalActionButtons';
 import {escape_room_data} from '../escape_room';
 import {useAppDispatch} from '../store/config';
 import {setSelectedRoom} from '../store/slices/roomSlice';
