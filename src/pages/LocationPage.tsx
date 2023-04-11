@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
-import ConfirmButton from '../components/ConfirmButton';
+import FinalActionButtons from '../components/FinalActionButtons';
 import {escape_room_data} from '../escape_room';
 import {useAppDispatch} from '../store/config';
 import {setSelectedRoom} from '../store/slices/roomSlice';
@@ -49,7 +49,6 @@ const LocationPage = () => {
           return (
             <OptionItem
               onClick={() => {
-                alert(value + ' clicked');
                 setSelectedLocation([...selectedLocation, value]);
               }}
             >
@@ -64,7 +63,6 @@ const LocationPage = () => {
           return (
             <OptionItem
               onClick={() => {
-                alert(value + ' clicked');
                 setSelectedLocation([...selectedLocation, value]);
               }}
             >
@@ -89,8 +87,7 @@ const LocationPage = () => {
         })}
       </OptionContainer>
 
-      <p onClick={() => filterByLocation()}> 확인</p>
-      <ConfirmButton />
+      <FinalActionButtons onHandleReset={() => setSelectedLocation([])} onHandleConfirm={() => filterByLocation()} />
     </Layout>
   );
 };
