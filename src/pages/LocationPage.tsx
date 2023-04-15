@@ -49,6 +49,7 @@ const LocationPage = () => {
           return (
             <OptionItem
               onClick={() => {
+                alert(value + ' clicked');
                 setSelectedLocation([...selectedLocation, value]);
               }}
             >
@@ -63,6 +64,7 @@ const LocationPage = () => {
           return (
             <OptionItem
               onClick={() => {
+                alert(value + ' clicked');
                 setSelectedLocation([...selectedLocation, value]);
               }}
             >

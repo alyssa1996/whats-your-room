@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import FinalActionButtons from '../components/FinalActionButtons';
 import {useAppDispatch, useAppSelector} from '../store/config';
@@ -7,18 +8,15 @@ import {Layout} from '../styles';
 
 const OptionsPage = () => {
   const {selectedRoom} = useAppSelector((state) => state.room);
-  const [selectedDifficultyLevel, setSelectedDifficultyLevel] = useState<Array<number>>([0, 1, 2, 3]);
-  const [selectedHorrorLevel, setSelectedHorrorLevel] = useState<Array<number>>([0, 1, 2, 3, 4]);
-  const [selectedActiveLevel, setSelectedActiveLevel] = useState<Array<number>>([0, 1, 2, 3]);
+  const [selectedDifficultyLevel, setSelectedDifficultyLevel] = useState<Array<number | undefined>>([]);
+  const [selectedHorrorLevel, setSelectedHorrorLevel] = useState<Array<number | undefined>>([]);
+  const [selectedActiveLevel, setSelectedActiveLevel] = useState<Array<number | undefined>>([]);
   const [selectedRecommendationLevel, setSelectedRecommendationLevel] = useState<Array<number>>([0, 1, 2, 3, 4]);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    console.log(selectedRoom);
-  }, []);
+  const navigate = useNavigate();
 
   const handleClickSelectedOption = (options: 'Difficulty' | 'Horror' | 'Active' | 'Recommendation' | 'Reset', selectedLevel: number) => {
-    console.log(options, selectedLevel);
+    alert(options + ' ' + selectedLevel);
     switch (options) {
       case 'Difficulty':
         setSelectedDifficultyLevel([...selectedDifficultyLevel, selectedLevel]);
@@ -47,9 +45,10 @@ const OptionsPage = () => {
     const horrorFilteredData = difficultyFilteredData.filter((value) => selectedHorrorLevel.includes(value?.공포도));
     const activeFilteredData = horrorFilteredData.filter((value) => selectedActiveLevel.includes(value?.활동성));
     // todo :활동성 추가
-    const recommendationFilteredData = activeFilteredData.filter((value) => ['S', 'A+', 'A'].includes(value?.추천도));
-    dispatch(setSelectedRoom(recommendationFilteredData));
-    console.log(recommendationFilteredData);
+    // const recommendationFilteredData = activeFilteredData.filter((value) => ['S', 'A+', 'A'].includes(value?.추천도));
+    dispatch(setSelectedRoom(activeFilteredData));
+    console.log(activeFilteredData);
+    navigate('/results');
   };
 
   return (
