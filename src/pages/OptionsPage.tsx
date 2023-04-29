@@ -77,7 +77,7 @@ const OptionsPage = () => {
       </OptionLayout>
       <h2>추천도</h2>
 
-      <FinalActionButtons onHandleReset={() => handleReset()} onHandleConfirm={() => handleConfirm()} />
+      <FinalActionButtons onHandleReset={() => handleReset()} onHandleConfirm={() => handleConfirm()} isConfirmDisabled={false} isInitializeDisabled={false} />
     </Layout>
   );
 };
