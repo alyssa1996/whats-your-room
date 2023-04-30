@@ -57,5 +57,6 @@ const OptionItem = styled.div<{isSelected: boolean | undefined}>`
   box-shadow: 1px 1px 2px rgba(91, 91, 91, 0.3);
   color: #127F00;
   font-weight: 400;
+  background: #E5ECE5;
   `}
 `;
