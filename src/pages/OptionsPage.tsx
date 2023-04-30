@@ -55,10 +55,15 @@ const OptionsPage = () => {
     <Layout>
       <h2>난이도</h2>
       <OptionLayout>
-        <p onClick={() => handleClickSelectedOption('Difficulty', 0)}>0</p>
+        <DifficultyIcon src="/assets/icons/difficulty_easy.svg" onClick={() => handleClickSelectedOption('Difficulty', 0)} />
+        <DifficultyIcon src="/assets/icons/difficulty_normal.svg" onClick={() => handleClickSelectedOption('Difficulty', 1)} />
+        <DifficultyIcon src="/assets/icons/difficulty_difficult.svg" onClick={() => handleClickSelectedOption('Difficulty', 2)} />
+        <DifficultyIcon src="/assets/icons/difficulty_hell.svg" onClick={() => handleClickSelectedOption('Difficulty', 3)} />
+
+        {/* <p onClick={() => handleClickSelectedOption('Difficulty', 0)}>0</p>
         <p onClick={() => handleClickSelectedOption('Difficulty', 1)}>1</p>
         <p onClick={() => handleClickSelectedOption('Difficulty', 2)}>2</p>
-        <p onClick={() => handleClickSelectedOption('Difficulty', 3)}>3</p>
+        <p onClick={() => handleClickSelectedOption('Difficulty', 3)}>3</p> */}
       </OptionLayout>
       <h2>공포도</h2>
       <OptionLayout>
@@ -89,4 +94,9 @@ const OptionLayout = styled.div`
   gap: 8px;
   justify-content: center;
   align-items: center;
+`;
+
+const DifficultyIcon = styled.img`
+  width: auto;
+  height: 41px;
 `;
