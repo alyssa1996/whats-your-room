@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import FinalActionButtons from '../components/FinalActionButtons';
 import LocationOptionItem from '../components/Location/LocationOptionItem';
-import LocationSectionTitle from '../components/Location/LocationSectionTitle';
+import SectionTitle from '../components/SectionTitle';
 import SelectionTitle from '../components/SelectionTitle';
 import {escape_room_data} from '../data/escape_room';
 import {useAppDispatch} from '../store/config';
@@ -59,7 +59,7 @@ const LocationPage = () => {
     <Layout>
       <SelectionTitle step={1} title={'방탈출을 하고 싶은 지역을 골라주세요'} />
       <SectionContainer>
-        <LocationSectionTitle title="서울" />
+        <SectionTitle title="서울" />
         <OptionContainer>
           {SEOUL_AREA_LIST.map((value) => {
             return <LocationOptionItem setSelectedLocation={onSetSelectedOption} selectedLocation={selectedLocation} optionValue={value} />;
@@ -68,7 +68,7 @@ const LocationPage = () => {
       </SectionContainer>
 
       <SectionContainer>
-        <LocationSectionTitle title="경기, 인천" />
+        <SectionTitle title="경기, 인천" />
         <OptionContainer>
           {GYEONGGI_AREA_LIST.map((value) => {
             return <LocationOptionItem setSelectedLocation={onSetSelectedOption} selectedLocation={selectedLocation} optionValue={value} />;
@@ -77,7 +77,7 @@ const LocationPage = () => {
       </SectionContainer>
 
       <SectionContainer>
-        <LocationSectionTitle title="영남" />
+        <SectionTitle title="영남" />
         <OptionContainer>
           {GYEONGSANG_AREA_LIST.map((value) => {
             return <LocationOptionItem setSelectedLocation={onSetSelectedOption} selectedLocation={selectedLocation} optionValue={value} />;
