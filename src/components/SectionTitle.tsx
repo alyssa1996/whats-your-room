@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const LocationSectionTitle = ({title}: {title: string}) => {
+const SectionTitle = ({title}: {title: string}) => {
   return <TitleText>{title}</TitleText>;
 };
 
-export default LocationSectionTitle;
+export default SectionTitle;
 
 const TitleText = styled.p`
   margin: 0;
