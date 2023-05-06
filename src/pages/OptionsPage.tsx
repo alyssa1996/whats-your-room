@@ -5,45 +5,70 @@ import FinalActionButtons from '../components/FinalActionButtons';
 import {useAppDispatch, useAppSelector} from '../store/config';
 import {setSelectedRoom} from '../store/slices/roomSlice';
 import {Layout} from '../styles';
+import SelectionTitle from '../components/SelectionTitle';
+import SectionTitle from '../components/SectionTitle';
+import OptionItem from '../components/Option/OptionItem';
 
 const OptionsPage = () => {
   const {selectedRoom} = useAppSelector((state) => state.room);
-  const [selectedDifficultyLevel, setSelectedDifficultyLevel] = useState<Array<number | undefined>>([]);
-  const [selectedHorrorLevel, setSelectedHorrorLevel] = useState<Array<number | undefined>>([]);
-  const [selectedActiveLevel, setSelectedActiveLevel] = useState<Array<number | undefined>>([]);
-  const [selectedRecommendationLevel, setSelectedRecommendationLevel] = useState<Array<number>>([0, 1, 2, 3, 4]);
+  const [selectedDifficultyLevel, setSelectedDifficultyLevel] = useState<Set<number | undefined>>(new Set());
+  const [selectedHorrorLevel, setSelectedHorrorLevel] = useState<Set<number | undefined>>(new Set());
+  const [selectedActiveLevel, setSelectedActiveLevel] = useState<Set<number | undefined>>(new Set());
+  const [selectedRecommendationLevel, setSelectedRecommendationLevel] = useState<Set<number>>(new Set([0, 1, 2, 3, 4]));
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleClickSelectedOption = (options: 'Difficulty' | 'Horror' | 'Active' | 'Recommendation' | 'Reset', selectedLevel: number) => {
+  useEffect(() => {}, [selectedDifficultyLevel, selectedActiveLevel, selectedHorrorLevel, selectedRecommendationLevel]);
+
+  const handleClickSelectedOption = (options: 'difficulty' | 'horror' | 'activity' | 'recommend' | 'reset', selectedLevel: number) => {
     alert(options + ' ' + selectedLevel);
+
     switch (options) {
-      case 'Difficulty':
-        setSelectedDifficultyLevel([...selectedDifficultyLevel, selectedLevel]);
+      case 'difficulty':
+        console.log(options, selectedLevel);
+        if (selectedDifficultyLevel.has(selectedLevel)) {
+          selectedDifficultyLevel.delete(selectedLevel);
+          setSelectedDifficultyLevel(selectedDifficultyLevel);
+        } else setSelectedDifficultyLevel(selectedDifficultyLevel.add(selectedLevel));
         break;
-      case 'Horror':
-        setSelectedHorrorLevel([...selectedHorrorLevel, selectedLevel]);
+      case 'horror':
+        if (selectedHorrorLevel.has(selectedLevel)) {
+          selectedHorrorLevel.delete(selectedLevel);
+          setSelectedHorrorLevel(selectedHorrorLevel);
+        } else {
+          setSelectedHorrorLevel(selectedHorrorLevel.add(selectedLevel));
+        }
         break;
-      case 'Active':
-        setSelectedActiveLevel([...selectedActiveLevel, selectedLevel]);
+      case 'activity':
+        if (selectedActiveLevel.has(selectedLevel)) {
+          selectedActiveLevel.delete(selectedLevel);
+          setSelectedActiveLevel(selectedActiveLevel);
+        } else {
+          setSelectedActiveLevel(selectedActiveLevel.add(selectedLevel));
+        }
         break;
-      case 'Recommendation':
-        setSelectedRecommendationLevel([...selectedRecommendationLevel, selectedLevel]);
+      case 'recommend':
+        if (selectedRecommendationLevel.has(selectedLevel)) {
+          selectedRecommendationLevel.delete(selectedLevel);
+          setSelectedRecommendationLevel(selectedRecommendationLevel);
+        } else {
+          setSelectedRecommendationLevel(selectedRecommendationLevel.add(selectedLevel));
+        }
         break;
     }
   };
 
   const handleReset = () => {
-    setSelectedDifficultyLevel([]);
-    setSelectedHorrorLevel([]);
-    setSelectedActiveLevel([]);
-    setSelectedRecommendationLevel([]);
+    setSelectedDifficultyLevel(new Set());
+    setSelectedHorrorLevel(new Set());
+    setSelectedActiveLevel(new Set());
+    setSelectedRecommendationLevel(new Set());
   };
 
   const handleConfirm = () => {
-    const difficultyFilteredData = selectedRoom.filter((value) => selectedDifficultyLevel.includes(value?.난이도));
-    const horrorFilteredData = difficultyFilteredData.filter((value) => selectedHorrorLevel.includes(value?.공포도));
-    const activeFilteredData = horrorFilteredData.filter((value) => selectedActiveLevel.includes(value?.활동성));
+    const difficultyFilteredData = selectedRoom.filter((value) => selectedDifficultyLevel.has(value?.난이도));
+    const horrorFilteredData = difficultyFilteredData.filter((value) => selectedHorrorLevel.has(value?.공포도));
+    const activeFilteredData = horrorFilteredData.filter((value) => selectedActiveLevel.has(value?.활동성));
     // todo :활동성 추가
     // const recommendationFilteredData = activeFilteredData.filter((value) => ['S', 'A+', 'A'].includes(value?.추천도));
     dispatch(setSelectedRoom(activeFilteredData));
@@ -52,51 +77,83 @@ const OptionsPage = () => {
   };
 
   return (
-    <Layout>
-      <h2>난이도</h2>
-      <OptionLayout>
-        <DifficultyIcon src="/assets/icons/difficulty_easy.svg" onClick={() => handleClickSelectedOption('Difficulty', 0)} />
-        <DifficultyIcon src="/assets/icons/difficulty_normal.svg" onClick={() => handleClickSelectedOption('Difficulty', 1)} />
-        <DifficultyIcon src="/assets/icons/difficulty_difficult.svg" onClick={() => handleClickSelectedOption('Difficulty', 2)} />
-        <DifficultyIcon src="/assets/icons/difficulty_hell.svg" onClick={() => handleClickSelectedOption('Difficulty', 3)} />
+    <OptionsPageLayout>
+      <SelectionTitle step={2} title={'어떤 방탈출을 원하는 지 골라주세요'} />
+      <SectionContainer>
+        <SectionTitle title="난이도" />
+        <OptionItemListContainer>
+          {[3, 2, 1, 0].map((value) => {
+            return (
+              <OptionItem
+                option="difficulty"
+                level={value}
+                onClick={() => handleClickSelectedOption('difficulty', value)}
+                selectedLevels={selectedDifficultyLevel}
+              />
+            );
+          })}
+        </OptionItemListContainer>
+      </SectionContainer>
 
-        {/* <p onClick={() => handleClickSelectedOption('Difficulty', 0)}>0</p>
-        <p onClick={() => handleClickSelectedOption('Difficulty', 1)}>1</p>
-        <p onClick={() => handleClickSelectedOption('Difficulty', 2)}>2</p>
-        <p onClick={() => handleClickSelectedOption('Difficulty', 3)}>3</p> */}
-      </OptionLayout>
-      <h2>공포도</h2>
-      <OptionLayout>
-        <p onClick={() => handleClickSelectedOption('Horror', 0)}>0</p>
-        <p onClick={() => handleClickSelectedOption('Horror', 1)}>1</p>
-        <p onClick={() => handleClickSelectedOption('Horror', 2)}>2</p>
-        <p onClick={() => handleClickSelectedOption('Horror', 3)}>3</p>
-        <p onClick={() => handleClickSelectedOption('Horror', 4)}>4</p>
-      </OptionLayout>
-      <h2>활동성</h2>
-      <OptionLayout>
-        <p onClick={() => handleClickSelectedOption('Active', 0)}>0</p>
-        <p onClick={() => handleClickSelectedOption('Active', 1)}>1</p>
-        <p onClick={() => handleClickSelectedOption('Active', 2)}>2</p>
-        <p onClick={() => handleClickSelectedOption('Active', 3)}>3</p>
-      </OptionLayout>
-      <h2>추천도</h2>
+      <SectionContainer>
+        <SectionTitle title="추천도" />
+        <OptionItemListContainer>
+          {[3, 2, 1, 0].map((value) => {
+            return (
+              <OptionItem
+                option="recommend"
+                level={value}
+                onClick={() => handleClickSelectedOption('recommend', value)}
+                selectedLevels={selectedRecommendationLevel}
+              />
+            );
+          })}
+        </OptionItemListContainer>
+      </SectionContainer>
+
+      <SectionContainer>
+        <SectionTitle title="활동성" />
+        <OptionItemListContainer>
+          {[3, 2, 1, 0].map((value) => {
+            return (
+              <OptionItem option="activity" level={value} onClick={() => handleClickSelectedOption('activity', value)} selectedLevels={selectedActiveLevel} />
+            );
+          })}
+        </OptionItemListContainer>
+      </SectionContainer>
+
+      <SectionContainer>
+        <SectionTitle title="공포도" />
+        <OptionItemListContainer>
+          {[4, 3, 2, 1, 0].map((value) => {
+            return <OptionItem option="horror" level={value} onClick={() => handleClickSelectedOption('horror', value)} selectedLevels={selectedHorrorLevel} />;
+          })}
+        </OptionItemListContainer>
+      </SectionContainer>
 
       <FinalActionButtons onHandleReset={() => handleReset()} onHandleConfirm={() => handleConfirm()} isConfirmDisabled={false} isInitializeDisabled={false} />
-    </Layout>
+    </OptionsPageLayout>
   );
 };
 
 export default OptionsPage;
 
-const OptionLayout = styled.div`
+const OptionsPageLayout = styled(Layout)`
+  overflow: hidden;
+`;
+
+const SectionContainer = styled.div`
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const OptionItemListContainer = styled.div`
+  width: max-content;
+  overflow-x: scroll;
   display: flex;
   gap: 8px;
   justify-content: center;
   align-items: center;
-`;
-
-const DifficultyIcon = styled.img`
-  width: auto;
-  height: 41px;
 `;
