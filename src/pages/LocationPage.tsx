@@ -5,7 +5,7 @@ import FinalActionButtons from '../components/FinalActionButtons';
 import LocationOptionItem from '../components/Location/LocationOptionItem';
 import LocationSectionTitle from '../components/Location/LocationSectionTitle';
 import SelectionTitle from '../components/SelectionTitle';
-import {escape_room_data} from '../escape_room';
+import {escape_room_data} from '../data/escape_room';
 import {useAppDispatch} from '../store/config';
 import {setSelectedRoom} from '../store/slices/roomSlice';
 import {Layout} from '../styles';
@@ -42,7 +42,7 @@ const LocationPage = () => {
   }, [selectedLocation]);
 
   const filterByLocation = () => {
-    const locationFilteredData = escape_room_data.filter((value) => selectedLocation.has(value.지역));
+    const locationFilteredData = escape_room_data.filter((value: any) => selectedLocation.has(value.지역));
     dispatch(setSelectedRoom(locationFilteredData));
     navigate('/options');
   };

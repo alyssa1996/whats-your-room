@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import SelectedRoomOptions from './SelectedRoomOptions';
 
 interface SelectedRoomItemProps {
   room: any;
@@ -24,12 +25,10 @@ const SelectedRoomItem = ({room}: SelectedRoomItemProps) => {
       </LocationInfoContainer>
 
       <ThemeImage src="" alt="" />
-      <OptionInfoContainer>
-        <p>#난이도{room.난이도}</p>
-        <p>#공포도{room.공포도}</p>
-        <p>#활동성{room.활동성}</p>
-        <p>#추천도{room.추천도}</p>
-      </OptionInfoContainer>
+
+      <HorizontalLine />
+
+      <SelectedRoomOptions roomInfo={room} />
     </SelectedRoomContainer>
   );
 };
@@ -100,9 +99,9 @@ const InfoText = styled.p`
   color: #2a2a2a;
 `;
 
-const OptionInfoContainer = styled.div`
+const HorizontalLine = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  margin: 12px 0px;
+  box-sizing: border-box;
+  border-top: 1px solid #f1f1f1;
 `;
