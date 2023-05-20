@@ -23,8 +23,9 @@ const SelectedRoomItem = ({room}: SelectedRoomItemProps) => {
           <InfoText>{room.지역}</InfoText>
         </InfoDetailContainer>
       </LocationInfoContainer>
-
-      <ThemeImage src="" alt="" />
+      <ThemeImageContainer>
+        <ThemeImage src="/assets/images/gray-whats-your-room.png" alt="" />
+      </ThemeImageContainer>
 
       <HorizontalLine />
 
@@ -58,12 +59,20 @@ const RoomThemeName = styled.div`
   color: #127f00;
 `;
 
-const ThemeImage = styled.img`
+const ThemeImageContainer = styled.div`
   width: 294px;
   height: 153px;
-  background-color: #e5ece5;
+  background-color: #f1f1f1;
   border-radius: 7px;
   margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ThemeImage = styled.img`
+  width: 172px;
+  height: 88px;
 `;
 
 const LocationInfoContainer = styled.div`

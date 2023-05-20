@@ -9,6 +9,7 @@ const ResultPage = () => {
 
   return (
     <ResultPageLayout>
+      <LogoImage src="/assets/images/whats-your-room.png" />
       <SelectedRoomListContainer>
         {selectedRoom.map((room, index) => {
           return <SelectedRoomItem room={room} key={index} />;
@@ -23,6 +24,15 @@ export default ResultPage;
 const ResultPageLayout = styled(Layout)`
   background-color: #e5ece5;
   padding-bottom: 42px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const LogoImage = styled.img`
+  width: 148px;
+  height: 64px;
+  margin-bottom: 26px;
 `;
 
 const SelectedRoomListContainer = styled.div`
