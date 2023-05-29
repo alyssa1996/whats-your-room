@@ -1,25 +1,31 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import {options} from '../../data/option_level';
 
 interface OptionItemProps {
   option: string;
   level: number;
-  onClick: () => void;
-  //   isSelected: boolean;
-  selectedLevels: Set<number | undefined>;
+  setSelectedLevel: (value: any) => void;
+  selectedLevel: Set<any>;
 }
 
-const OptionItem = ({option, level, onClick, selectedLevels}: OptionItemProps) => {
+const OptionItem = ({option, level, setSelectedLevel, selectedLevel}: OptionItemProps) => {
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
-  useEffect(() => {
-    console.log('here??');
-    if (selectedLevels && selectedLevels.has(level)) setIsSelected(true);
-  }, [selectedLevels]);
+  const handleClickSelectedOption = () => {
+    setIsSelected(!isSelected);
+
+    if (selectedLevel && selectedLevel.has(selectedLevel)) {
+      selectedLevel.delete(level);
+      setSelectedLevel(selectedLevel);
+    } else {
+      selectedLevel.add(level);
+      setSelectedLevel(selectedLevel);
+    }
+  };
 
   return (
-    <OptionItemContainer key={`${option}_${level}`} onClick={onClick} isSelected={isSelected}>
+    <OptionItemContainer key={`${option}_${level}`} onClick={handleClickSelectedOption} isSelected={isSelected}>
       <OptionIcon src={`/assets/icons/${option}/${option}_${level}.svg`} />
       <OptionTitle>{options[option][level]}</OptionTitle>
     </OptionItemContainer>
